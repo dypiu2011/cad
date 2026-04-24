@@ -1,0 +1,74 @@
+#!/bin/bash
+
+# Check if script is run as root
+if [ "$EUID" -ne 0 ]; then
+  echo "Please run this script using sudo."
+  exit 1
+fi
+
+while true
+do
+    echo "========== USER MANAGEMENT MENU =========="
+    echo "1. Add User"
+    echo "2. Delete User"
+    echo "3. Exit"
+    echo "Enter your choice:"
+    read choice
+
+    case $choice in
+    1)
+        echo "Enter username to add:"
+        read username
+
+        # Check if user already exists
+        if id "$username" &>/dev/null
+        then
+            echo "User already exists. Try another name."
+        else
+            # Add user with home directory
+            useradd -m "$username"
+
+            if [ $? -eq 0 ]; then
+                echo "User '$username' added successfully."
+            else
+                echo "Error: User could not be added."
+            fi
+        fi
+        ;;
+    2)
+        echo "Enter username to delete:"
+        read username
+
+        # Check if user exists
+        if id "$username" &>/dev/null
+        then
+            echo "Are you sure you want to delete '$username'? (y/n)"
+            read confirm
+
+            if [ "$confirm" = "y" ]; then
+                # Delete user with home directory
+                userdel -r "$username"
+
+                if [ $? -eq 0 ]; then
+                    echo "User '$username' deleted successfully."
+                else
+                    echo "Error: User could not be deleted."
+                fi
+            else
+                echo "Deletion cancelled."
+            fi
+        else
+            echo "User does not exist. Cannot delete."
+        fi
+        ;;
+    3)
+        echo "Exiting program..."
+        break
+        ;;
+    *)
+        echo "Invalid choice. Please enter 1, 2, or 3."
+        ;;
+    esac
+
+    echo ""
+done

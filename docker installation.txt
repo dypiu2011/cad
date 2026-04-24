@@ -1,0 +1,12 @@
+- create ec2 instance and connect to ssh and run command
+
+
+$ sudo yum update -y
+
+$ sudo yum install docker -y
+
+$ sudo systemctl start docker -y
+
+$ sudo systemctl enable -y
+
+$ docker --version

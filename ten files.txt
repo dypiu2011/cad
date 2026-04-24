@@ -1,0 +1,26 @@
+#!/bin/bash
+
+echo "Creating files..."
+
+touch file1.txt
+touch file2.sh
+touch file3.c
+touch file4.cpp
+touch file5.java
+touch file6.html
+touch file7.css
+touch file8.js
+touch file9.py
+touch file10.log
+
+echo "Files created successfully."
+
+echo "Checking file type and permissions..."
+
+for file in file1.txt file2.sh file3.c file4.cpp file5.java file6.html file7.css file8.js file9.py file10.log
+do
+    echo "File: $file"
+    file "$file"
+    ls -l "$file"
+    echo "---------------------------"
+done

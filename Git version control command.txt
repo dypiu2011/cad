@@ -1,0 +1,34 @@
+Git lab
+a. git —version
+b. git config —global user.name “Your Name”
+c. git config —global user.email “your@email.com”  
+d. git config —list
+
+mkdir demo_git
+cd demo_git
+git init
+git status
+
+echo “My name is Nachiket” > name.txt
+git status (Untracked file)
+    
+git add .
+git commit -m “My name”
+
+git log  
+git log —online
+
+echo “My last names is Deshpande” >> name.txt
+
+git diff
+
+git add .
+git commit -m “My last name”
+
+**git restore name.txt      (Discard uncommitted changes)
+
+git mv name.txt renamed.txt  (rename the file)
+git commit -m “Renamed file”
+
+git rm renamed.txt
+git commit -m “Deleted file”

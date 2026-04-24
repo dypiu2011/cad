@@ -1,0 +1,177 @@
+1. arithmetic operator script
+
+
+#!/bin/bash
+
+a=20
+b=10
+
+sum=$((a+b))
+sub=$((a-b))
+mul=$((a*b))
+div=$((a/b))
+mod=$((a%b))
+
+echo "Addition = $sum"
+echo "Subtraction = $sub"
+echo "Multiplication = $mul"
+echo "Division = $div"
+echo "Modulus = $mod"
+
+2 relational operator script
+
+#!/bin/bash
+
+a=10
+b=20
+
+if [ $a -eq $b ]
+then
+    echo "a is equal to b"
+
+elif [ $a -ne $b ]
+then
+    echo "a is not equal to b"
+fi
+
+
+if [ $a -lt $b ]
+then
+    echo "a is less than b"
+fi
+
+
+if [ $b -gt $a ]
+then
+    echo "b is greater than a"
+fi
+
+
+3. Boolean operator script
+
+#!/bin/bash
+
+a=10
+b=20
+
+if [ $a -lt 15 ] && [ $b -gt 15 ]
+then
+    echo "Both conditions are TRUE"
+fi
+
+if [ $a -gt 15 ] || [ $b -gt 15 ]
+then
+    echo "At least one condition is TRUE"
+fi
+
+
+4. string operator script
+
+
+#!/bin/bash
+
+str1="prasad"
+str2="prasad"
+str3=""
+
+if [ "$str1" = "$str2" ]
+then
+    echo "Strings are equal"
+fi
+
+if [ -z "$str3" ]
+then
+    echo "String is empty"
+fi
+
+if [ -n "$str1" ]
+then
+    echo "String is not empty"
+fi
+
+
+5. file test operator script
+
+
+#!/bin/bash
+
+file="test.txt"
+
+if [ -e $file ]
+then
+    echo "File exists"
+fi
+
+if [ -f $file ]
+then
+    echo "It is a regular file"
+fi
+
+if [ -d $file ]
+then
+    echo "It is a directory"
+fi
+
+if [ -r $file ]
+then
+    echo "File has read permission"
+fi
+
+if [ -w $file ]
+then
+    echo "File has write permission"
+fi
+
+if [ -x $file ]
+then
+    echo "File has execute permission"
+fi
+
+
+6. if-else-elif-if statement operator
+
+
+#!/bin/bash
+
+num=10
+
+if [ $num -gt 10 ]; then
+    echo "Number is greater than 10"
+
+elif [ $num -eq 10 ]; then
+    echo "Number is exactly 10"
+
+else
+    echo "Number is less than 10"
+fi
+
+
+7. user data only add and delete
+
+
+#!/bin/bash
+
+while true; do
+    echo "1. Add User  2. Delete User  3. Exit"
+    read -p "Choice: " choice
+
+    case $choice in
+        1)
+            read -p "Username: " user
+            [[ $(id "$user" &>/dev/null; echo $?) == 0 ]] || useradd "$user" && echo "User '$user' added" || echo "Failed to add"
+            ;;
+        2)
+            read -p "Username: " user
+            [[ $(id "$user" &>/dev/null; echo $?) == 0 ]] && userdel "$user" && echo "User '$user' deleted" || echo "User not found/failed"
+            ;;
+        3)
+            echo "Exiting..."
+            break
+            ;;
+        *)
+            echo "Invalid choice"
+            ;;
+    esac
+
+    echo
+done

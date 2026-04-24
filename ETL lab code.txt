@@ -1,0 +1,43 @@
+import boto3
+from datetime import datetime
+from urllib.parse import unquote_plus
+import os
+
+def lambda_handler(event, context):
+
+    s3 = boto3.client('s3')
+
+    Source_bucket = "source-PRN"
+    destination_bucket = "destination-PRN"
+
+    Object_Key = unquote_plus(event['Records'][0]['s3']['object']['key'])
+
+    # Extract extension
+    _, ext = os.path.splitext(Object_Key)
+
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    new_object_key = f"{timestamp}{ext}"
+
+    Copy_Source = {
+        'Bucket': Source_bucket,
+        'Key': Object_Key
+    }
+
+    Copy_Params = {
+        'Bucket': destination_bucket,
+        'CopySource': Copy_Source,
+        'Key': new_object_key
+    }
+
+    try:
+        result = s3.copy_object(**Copy_Params)
+        print("S3 object copy successful. Response:", result)
+
+        s3.delete_object(
+            Bucket=Source_bucket,
+            Key=Object_Key
+        )
+        print("Source object deleted successfully.")
+
+    except Exception as e:
+        print("Error copying object:", e)
