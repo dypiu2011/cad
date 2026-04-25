@@ -1,9 +1,39 @@
+# private ec2
+sudo yum update -y
+sudo yum install mariadb105-server -y
+sudo systemctl start mariadb
+sudo systemctl enable mariadb
+
+sudo mysql_secure_installation
+
+sudo mysql -u root -p
+
+create database clg;
+use clg;
+create table user (id int, name text);
+insert into user values (1, xyz);
+select * from user;
+
+#in mysql database
 CREATE USER 'root'@'%' IDENTIFIED BY 'your_password';
 GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
 
+#in private ec2
 sudo nano /etc/my.cnf
 
 bind-address = 0.0.0.0
 
 sudo systemctl restart mariadb
+
+#in public ec2
+sudo yum update -y
+sudo yum install mariadb105-server -y
+sudo systemctl start mariadb
+sudo systemctl enable mariadb
+
+sudo mariadb -h <private_ip> -u root -p
+
+use clg;
+
+select * from user;
