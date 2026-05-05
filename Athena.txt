@@ -1,0 +1,28 @@
+id,name,age,gender,course,email,city
+1,Amit Sharma,20,Male,BCA,amit.sharma@gmail.com,Pune
+2,Priya Verma,21,Female,BCA,priya.verma@gmail.com,Mumbai
+3,Rahul Patil,19,Male,BCA,rahul.patil@gmail.com,Nashik
+
+
+
+CREATE EXTERNAL TABLE pipeline_db.students (
+    id INT,
+    name STRING,
+    age INT,
+    gender STRING,
+    course STRING,
+    email STRING,
+    city STRING
+)
+ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe'
+WITH SERDEPROPERTIES (
+    'field.delim' = ',',
+    'skip.header.line.count' = '1'
+)
+LOCATION 's3://your-bucket-name/students-data/';
+
+
+show tables in pipeline_db;
+
+
+SELECT * FROM pipeline_db.students;
